@@ -1,9 +1,10 @@
 const {
   getStudents,
+  searchStudents,
   getStudent,
   addStudent,
   updateStudent,
-  deleteStudent
+  deleteStudent,
 } = require("../controllers/studentController");
 
 const StudentSchema = {
@@ -36,6 +37,18 @@ const getStudentOpts = {
   handler: getStudent,
 };
 
+const searchStudentOpts = {
+  schema: {
+    response: {
+      200: {
+        type: "array",
+        items: StudentSchema,
+      },
+    },
+  },
+  handler: searchStudents,
+};
+
 const postStudentOpts = {
   schema: {
     body: {
@@ -54,23 +67,23 @@ const postStudentOpts = {
 };
 
 const updateStudentOpts = {
-    schema: {
-      response: {
-        200: StudentSchema,
-      },
+  schema: {
+    response: {
+      200: StudentSchema,
     },
-    handler: updateStudent,
-  };
+  },
+  handler: updateStudent,
+};
 
 const deleteStudentOpts = {
   schema: {
     response: {
-      200: { 
-          type: "object",
-          properties:{
-              message:{ type: "string"}
-          } 
-    },
+      200: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+        },
+      },
     },
   },
   handler: deleteStudent,
@@ -80,18 +93,19 @@ function studentRoutes(fastify, options, done) {
   // Getting all items
   fastify.get("/students", getStudentsOpts);
 
+  fastify.get("/search", searchStudentOpts);
+
   // Getting single item
   fastify.get("/students/:id", getStudentOpts);
 
   // Adding an item
   fastify.post("/students", postStudentOpts);
-  
+
   //  Updating item
   fastify.put("/students/:id", updateStudentOpts);
 
   //  Deleting item
   fastify.delete("/students/:id", deleteStudentOpts);
-
 
   done();
 }

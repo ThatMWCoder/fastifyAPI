@@ -11,6 +11,13 @@ const getStudent = (req, reply) => {
   reply.send(student);
 };
 
+const searchStudents = (req, reply) => {
+  const q = ((req.query?.q) ?? '').toLowerCase();
+  reply.send(
+    students.filter(({ name }) => name.toLowerCase().includes(q))
+  );
+};
+
 const addStudent = (req, reply) => {
   const { name, level } = req.body;
   const student = {
@@ -44,6 +51,7 @@ const deleteStudent = (req, reply) => {
 
 module.exports = {
   getStudents,
+  searchStudents,
   getStudent,
   addStudent,
   updateStudent,

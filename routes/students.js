@@ -77,16 +77,16 @@ const deleteStudentOpts = {
 };
 
 function studentRoutes(fastify, options, done) {
-  // Getting all items
+    // Getting all students
   fastify.get("/students", getStudentsOpts);
 
-  // Getting single item
+  // Getting single student
   fastify.get("/students/:id", getStudentOpts);
 
-  // Adding an item
+  // Adding an student
   fastify.post("/students", postStudentOpts);
   
-  //  Updating item
+  //  Updating a student
   fastify.put("/students/:id", updateStudentOpts);
 
   //  Deleting item
